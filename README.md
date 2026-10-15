@@ -75,19 +75,40 @@ decimalToPercent.outIn(50); // 0.5
 
 #### Built-in `MapInOut`s
 
-| Name         | Description                        | `inOut`                | `outIn`                |
-|--------------|------------------------------------|------------------------|------------------------|
-| `DEG_TO_RAD` | Converts degrees to radians        | `(deg) => rad`         | `(rad) => deg`         |
-| `PERCENT`    | Converts a percentage to a decimal | `(percent) => decimal` | `(decimal) => percent` |
+| Name         | Description                             | `inOut`                 | `outIn`                 |
+| ------------ | --------------------------------------- | ----------------------- | ----------------------- |
+| `DECI`       | Converts a value in tenths to a decimal | `(deci) => decimal`     | `(decimal) => deci`     |
+| `DEG_TO_RAD` | Converts degrees to radians             | `(deg) => rad`          | `(rad) => deg`          |
+| `PERCENT`    | Converts a percentage to a decimal      | `(percent) => decimal`  | `(decimal) => percent`  |
+| `PERMILLE`   | Converts a permillage to a decimal      | `(permille) => decimal` | `(decimal) => permille` |
 
 ```ts
-import { DEG_TO_RAD, PERCENT } from '@xstd/map-function';
+import { DECI, DEG_TO_RAD, PERCENT, PERMILLE } from '@xstd/map-function';
+
+DECI.inOut(10); // 1
+DECI.outIn(0.25); // 2.5
 
 DEG_TO_RAD.inOut(180); // ~3.14159...
 DEG_TO_RAD.outIn(Math.PI); // 180
 
 PERCENT.inOut(50); // 0.5
 PERCENT.outIn(0.25); // 25
+
+PERMILLE.inOut(1000); // 1
+PERMILLE.outIn(0.25); // 250
+```
+
+#### `perDivisor`
+
+Creates a `MapInOut` dividing values by a given `divisor` (and multiplying them back). `DECI`, `PERCENT` and `PERMILLE` are shortcuts of it.
+
+```ts
+import { perDivisor } from '@xstd/map-function';
+
+const perMyriad = perDivisor(10000);
+
+perMyriad.inOut(10000); // 1
+perMyriad.outIn(0.25); // 2500
 ```
 
 ### MapFunctionArguments
