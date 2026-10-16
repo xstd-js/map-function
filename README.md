@@ -77,6 +77,19 @@ decimalToPercent.inOut(0.5); // 50
 decimalToPercent.outIn(50); // 0.5
 ```
 
+##### `chainMapInOut`
+
+Chains multiple `MapInOut`s into a single one: `inOut` applies each map from left to right, and `outIn` applies them from right to left.
+
+```ts
+import { DECI, PERCENT, chainMapInOut, reverseMapInOut } from '@xstd/map-function';
+
+const deciToPercent = chainMapInOut(DECI, reverseMapInOut(PERCENT)); // MapInOut<number, number>
+
+deciToPercent.inOut(5); // 50
+deciToPercent.outIn(50); // 5
+```
+
 #### Built-in
 
 Factories creating common `MapInOut`s, and their shortcuts.

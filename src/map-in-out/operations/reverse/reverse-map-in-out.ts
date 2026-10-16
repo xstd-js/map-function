@@ -7,8 +7,8 @@ export function reverseMapInOut<GIn, GOut>({
   inOut,
   outIn,
 }: MapInOut<GIn, GOut>): MapInOut<GOut, GIn> {
-  return {
+  return Object.freeze({
     inOut: outIn,
     outIn: inOut,
-  };
+  });
 }
