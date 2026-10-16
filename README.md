@@ -59,7 +59,11 @@ const stringLength: MapInOut<string, number> = Object.freeze({
 });
 ```
 
-#### `reverseMapInOut`
+#### Operations
+
+Functions transforming a `MapInOut` into another one.
+
+##### `reverseMapInOut`
 
 Reverses the `in`/`out` operations of a `MapInOut`: `inOut` becomes `outIn` and `outIn` becomes `inOut`.
 
@@ -73,7 +77,42 @@ decimalToPercent.inOut(0.5); // 50
 decimalToPercent.outIn(50); // 0.5
 ```
 
-#### Built-in `MapInOut`s
+#### Built-in
+
+Factories creating common `MapInOut`s, and their shortcuts.
+
+##### `mapInOutEnum`
+
+Creates a `MapInOut` mapping values from a list of `[input, output]` entries (and the reverse mapping). Throws when a value is not part of the entries.
+
+```ts
+import { mapInOutEnum } from '@xstd/map-function';
+
+const parity = mapInOutEnum([
+  [0, 'even'],
+  [1, 'odd'],
+]);
+
+parity.inOut(1); // 'odd'
+parity.outIn('even'); // 0
+```
+
+##### `mapInOutFactor`
+
+Creates a `MapInOut` multiplying values by a given `factor` (and dividing them back).
+
+```ts
+import { mapInOutFactor } from '@xstd/map-function';
+
+const perMyriad = mapInOutFactor(0.0001);
+
+perMyriad.inOut(1); // 0.0001
+perMyriad.outIn(0.25); // 2500
+```
+
+##### Shortcuts
+
+`DECI`, `DEG_TO_RAD`, `PERCENT` and `PERMILLE` are shortcuts of `mapInOutFactor`:
 
 | Name         | Description                             | `inOut`                 | `outIn`                 |
 | ------------ | --------------------------------------- | ----------------------- | ----------------------- |
@@ -98,19 +137,6 @@ PERMILLE.inOut(1000); // 1
 PERMILLE.outIn(0.25); // 250
 ```
 
-#### `perDivisor`
-
-Creates a `MapInOut` dividing values by a given `divisor` (and multiplying them back). `DECI`, `PERCENT` and `PERMILLE` are shortcuts of it.
-
-```ts
-import { perDivisor } from '@xstd/map-function';
-
-const perMyriad = perDivisor(10000);
-
-perMyriad.inOut(10000); // 1
-perMyriad.outIn(0.25); // 2500
-```
-
 ### MapFunctionArguments
 
 A function that maps a tuple of values of type `GInArgs` to a tuple of values of type `GOutArgs`.
@@ -121,7 +147,9 @@ Useful to adapt the arguments of another function (e.g. callbacks or listeners).
 import type { MapFunctionArguments } from '@xstd/map-function';
 ```
 
-#### `mapOneArgument`
+#### Built-in
+
+##### `mapOneArgument`
 
 Creates a function that maps the first argument of a function to another one.
 
@@ -133,7 +161,7 @@ const parse = mapOneArgument((input: string): number => Number.parseInt(input));
 parse('42'); // [42]
 ```
 
-#### `setStaticArguments`
+##### `setStaticArguments`
 
 Creates a function that maps no arguments to a list of predefined ones.
 
